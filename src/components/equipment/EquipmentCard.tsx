@@ -3,16 +3,7 @@ import { Card, CardContent, CardHeader, CardFooter } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-
-export interface Equipment {
-  id: string;
-  name: string;
-  type: string;
-  status: "functional" | "needs-maintenance" | "out-of-service";
-  lastMaintenance: string;
-  nextMaintenance: string;
-  image: string;
-}
+import { type Equipment } from "@/types";
 
 interface EquipmentCardProps {
   equipment: Equipment;
@@ -37,11 +28,13 @@ export function EquipmentCard({ equipment, className, onMaintenance }: Equipment
   return (
     <Card className={cn("overflow-hidden", className)}>
       <CardHeader className="p-0">
-        <img 
-          src={equipment.image} 
-          alt={equipment.name} 
-          className="w-full h-48 object-cover"
-        />
+        {equipment.image && (
+          <img 
+            src={equipment.image} 
+            alt={equipment.name} 
+            className="w-full h-48 object-cover"
+          />
+        )}
       </CardHeader>
       <CardContent className="p-4">
         <div className="flex items-center justify-between mb-2">
