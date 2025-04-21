@@ -4,23 +4,23 @@ import { Calendar } from "@/components/ui/calendar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { format } from "date-fns";
 import { Badge } from "@/components/ui/badge";
-import { Corn, Wheat, Carrot, Sprout } from "lucide-react";
+import { Wheat, Leaf, Sprout, SproutIcon } from "lucide-react";
 
 // Custom component for rendering days with specific crops
-const CropDayContent = ({ day }: { day: Date }) => {
+const CropDayContent = ({ date }: { date: Date }) => {
   // Sample crop data - in a real app, this would come from an API or database
   const cropEvents = [
     { date: new Date(2025, 3, 15), crop: "Wheat", icon: <Wheat className="h-4 w-4" />, color: "bg-amber-500" },
-    { date: new Date(2025, 3, 22), crop: "Corn", icon: <Corn className="h-4 w-4" />, color: "bg-yellow-500" },
-    { date: new Date(2025, 4, 5), crop: "Carrot", icon: <Carrot className="h-4 w-4" />, color: "bg-orange-500" },
+    { date: new Date(2025, 3, 22), crop: "Maize", icon: <SproutIcon className="h-4 w-4" />, color: "bg-yellow-500" },
+    { date: new Date(2025, 4, 5), crop: "Vegetables", icon: <Leaf className="h-4 w-4" />, color: "bg-orange-500" },
     { date: new Date(2025, 4, 12), crop: "Rice", icon: <Sprout className="h-4 w-4" />, color: "bg-green-500" },
   ];
   
   // Find if this day has a crop event
   const cropEvent = cropEvents.find(event => 
-    event.date.getDate() === day.getDate() && 
-    event.date.getMonth() === day.getMonth() && 
-    event.date.getFullYear() === day.getFullYear()
+    event.date.getDate() === date.getDate() && 
+    event.date.getMonth() === date.getMonth() && 
+    event.date.getFullYear() === date.getFullYear()
   );
   
   if (cropEvent) {
@@ -43,8 +43,8 @@ export const CropCalendar = () => {
   
   const [selectedCrops, setSelectedCrops] = useState([
     { name: "Wheat", season: "Rabi", sowingMonth: "October-November", harvestMonth: "March-April", color: "bg-amber-500", icon: <Wheat className="h-4 w-4" /> },
-    { name: "Corn", season: "Kharif", sowingMonth: "June-July", harvestMonth: "September-October", color: "bg-yellow-500", icon: <Corn className="h-4 w-4" /> },
-    { name: "Carrot", season: "Winter", sowingMonth: "September-October", harvestMonth: "December-January", color: "bg-orange-500", icon: <Carrot className="h-4 w-4" /> },
+    { name: "Maize", season: "Kharif", sowingMonth: "June-July", harvestMonth: "September-October", color: "bg-yellow-500", icon: <SproutIcon className="h-4 w-4" /> },
+    { name: "Vegetables", season: "Winter", sowingMonth: "September-October", harvestMonth: "December-January", color: "bg-orange-500", icon: <Leaf className="h-4 w-4" /> },
     { name: "Rice", season: "Kharif", sowingMonth: "June-July", harvestMonth: "November-December", color: "bg-green-500", icon: <Sprout className="h-4 w-4" /> },
   ]);
   
@@ -71,8 +71,8 @@ export const CropCalendar = () => {
               components={{
                 DayContent: (props) => (
                   <>
-                    {props.day.day}
-                    <CropDayContent day={props.date} />
+                    {props.date.getDate()}
+                    <CropDayContent date={props.date} />
                   </>
                 )
               }}
@@ -91,8 +91,8 @@ export const CropCalendar = () => {
                 <div className="space-y-3">
                   {[
                     { date: "April 15, 2025", activity: "Wheat Harvesting", crop: "Wheat" },
-                    { date: "April 22, 2025", activity: "Corn Sowing Preparation", crop: "Corn" },
-                    { date: "May 5, 2025", activity: "Carrot Seed Germination Check", crop: "Carrot" },
+                    { date: "April 22, 2025", activity: "Maize Sowing Preparation", crop: "Maize" },
+                    { date: "May 5, 2025", activity: "Vegetable Seed Germination Check", crop: "Vegetables" },
                     { date: "May 12, 2025", activity: "Rice Field Preparation", crop: "Rice" },
                   ].map((activity, i) => (
                     <div key={i} className="flex items-start p-2 border rounded-md">

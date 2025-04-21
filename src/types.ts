@@ -3,7 +3,7 @@ export interface Equipment {
   id: string;
   name: string;
   type: string;
-  status: "operational" | "maintenance" | "repair";
+  status: "functional" | "needs-maintenance" | "out-of-service";
   lastMaintenance: string;
   nextMaintenance: string;
   image?: string;
