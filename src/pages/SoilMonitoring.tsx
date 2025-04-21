@@ -3,7 +3,7 @@ import { SoilChart } from "@/components/charts/SoilChart";
 import { MetricCard } from "@/components/ui/metric-card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Droplets, Leaf, Flask, Waves } from "lucide-react";
+import { Droplets, Leaf, TestTube, Waves } from "lucide-react";
 
 export default function SoilMonitoring() {
   return (
@@ -24,7 +24,7 @@ export default function SoilMonitoring() {
         <MetricCard
           title="pH Level"
           value="6.8"
-          icon={<Flask className="h-4 w-4" />}
+          icon={<TestTube className="h-4 w-4" />}
           description="Slightly acidic"
           trend={{ value: 2, isPositive: true }}
         />

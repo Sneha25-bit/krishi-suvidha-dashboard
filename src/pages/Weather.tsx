@@ -3,7 +3,7 @@ import { WeatherChart } from "@/components/charts/WeatherChart";
 import { MetricCard } from "@/components/ui/metric-card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { BadgeInfo } from "@/components/ui/badge";
+import { BadgeInfo } from "@/components/ui/badge-info";
 import { CloudRain, Droplets, Wind, Sun, CloudLightning, ThermometerSun, Umbrella } from "lucide-react";
 
 export default function Weather() {

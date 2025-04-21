@@ -1,4 +1,3 @@
-
 import { 
   BarChart2, 
   Droplets, 
@@ -6,8 +5,7 @@ import {
   CloudRain, 
   Tractor, 
   Home, 
-  Settings,
-  Indian
+  Settings
 } from "lucide-react";
 
 import {

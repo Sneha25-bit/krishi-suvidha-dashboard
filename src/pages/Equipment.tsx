@@ -1,13 +1,8 @@
-
-import { EquipmentCard, Equipment } from "@/components/equipment/EquipmentCard";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Badge } from "@/components/ui/badge";
-import { toast } from "sonner";
+import { EquipmentCard } from "@/components/equipment/EquipmentCard";
+import { type Equipment as EquipmentType } from "@/types";
 
 // Sample equipment data
-const equipmentData: Equipment[] = [
+const equipmentData: EquipmentType[] = [
   {
     id: "tractor-1",
     name: "Mahindra 575 DI Tractor",

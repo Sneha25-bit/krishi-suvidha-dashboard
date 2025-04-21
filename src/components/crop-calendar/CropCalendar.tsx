@@ -1,161 +1,135 @@
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import React, { useState } from 'react';
 import { Calendar } from "@/components/ui/calendar";
-import { useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { format } from "date-fns";
 import { Badge } from "@/components/ui/badge";
+import { Corn, Wheat, Carrot, Sprout } from "lucide-react";
 
-interface CropEvent {
-  date: Date;
-  type: "planting" | "harvesting" | "fertilizing" | "watering";
-  crop: string;
-  description: string;
-}
-
-interface CropCalendarProps {
-  events?: CropEvent[];
-  className?: string;
-}
-
-// Sample events data
-const sampleEvents: CropEvent[] = [
-  {
-    date: new Date(2025, 3, 15), // April 15, 2025
-    type: "planting",
-    crop: "Rice",
-    description: "Plant rice seedlings"
-  },
-  {
-    date: new Date(2025, 3, 20), // April 20, 2025
-    type: "fertilizing",
-    crop: "Wheat",
-    description: "Apply NPK fertilizer"
-  },
-  {
-    date: new Date(2025, 3, 25), // April 25, 2025
-    type: "watering",
-    crop: "Cotton",
-    description: "Irrigation scheduled"
-  },
-  {
-    date: new Date(2025, 4, 5), // May 5, 2025
-    type: "harvesting",
-    crop: "Maize",
-    description: "Harvest maize crop"
-  },
-];
-
-export function CropCalendar({ events = sampleEvents, className }: CropCalendarProps) {
-  const [date, setDate] = useState<Date | undefined>(new Date());
-  const [selectedEvents, setSelectedEvents] = useState<CropEvent[]>([]);
-
-  const handleDateChange = (selectedDate: Date | undefined) => {
-    setDate(selectedDate);
-    
-    if (selectedDate) {
-      const eventsOnDate = events.filter(
-        event => 
-          event.date.getDate() === selectedDate.getDate() &&
-          event.date.getMonth() === selectedDate.getMonth() &&
-          event.date.getFullYear() === selectedDate.getFullYear()
-      );
-      setSelectedEvents(eventsOnDate);
-    } else {
-      setSelectedEvents([]);
-    }
-  };
-
-  // Determine which dates have events
-  const getEventDates = () => {
-    const eventDates: Record<string, true> = {};
-    
-    events.forEach(event => {
-      const dateString = event.date.toDateString();
-      eventDates[dateString] = true;
-    });
-    
-    return eventDates;
-  };
-
-  // Custom rendering function to highlight dates with events
-  const eventDates = getEventDates();
+// Custom component for rendering days with specific crops
+const CropDayContent = ({ day }: { day: Date }) => {
+  // Sample crop data - in a real app, this would come from an API or database
+  const cropEvents = [
+    { date: new Date(2025, 3, 15), crop: "Wheat", icon: <Wheat className="h-4 w-4" />, color: "bg-amber-500" },
+    { date: new Date(2025, 3, 22), crop: "Corn", icon: <Corn className="h-4 w-4" />, color: "bg-yellow-500" },
+    { date: new Date(2025, 4, 5), crop: "Carrot", icon: <Carrot className="h-4 w-4" />, color: "bg-orange-500" },
+    { date: new Date(2025, 4, 12), crop: "Rice", icon: <Sprout className="h-4 w-4" />, color: "bg-green-500" },
+  ];
   
-  const renderDay = (day: Date) => {
-    const dateString = day.toDateString();
-    const hasEvent = eventDates[dateString];
-    
+  // Find if this day has a crop event
+  const cropEvent = cropEvents.find(event => 
+    event.date.getDate() === day.getDate() && 
+    event.date.getMonth() === day.getMonth() && 
+    event.date.getFullYear() === day.getFullYear()
+  );
+  
+  if (cropEvent) {
     return (
-      <div className="relative">
-        <div>{day.getDate()}</div>
-        {hasEvent && (
-          <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-farm-primary rounded-full" />
-        )}
+      <div className="relative w-full h-full">
+        <div className="absolute bottom-0 right-0">
+          <div className={`${cropEvent.color} rounded-full p-1 text-white`}>
+            {cropEvent.icon}
+          </div>
+        </div>
       </div>
     );
-  };
+  }
+  
+  return null;
+};
 
-  const getEventTypeColor = (type: CropEvent["type"]) => {
-    switch (type) {
-      case "planting":
-        return "bg-green-500 hover:bg-green-600";
-      case "harvesting":
-        return "bg-amber-500 hover:bg-amber-600";
-      case "fertilizing":
-        return "bg-blue-500 hover:bg-blue-600";
-      case "watering":
-        return "bg-sky-500 hover:bg-sky-600";
-      default:
-        return "bg-gray-500 hover:bg-gray-600";
-    }
-  };
-
+export const CropCalendar = () => {
+  const [date, setDate] = useState<Date>(new Date());
+  
+  const [selectedCrops, setSelectedCrops] = useState([
+    { name: "Wheat", season: "Rabi", sowingMonth: "October-November", harvestMonth: "March-April", color: "bg-amber-500", icon: <Wheat className="h-4 w-4" /> },
+    { name: "Corn", season: "Kharif", sowingMonth: "June-July", harvestMonth: "September-October", color: "bg-yellow-500", icon: <Corn className="h-4 w-4" /> },
+    { name: "Carrot", season: "Winter", sowingMonth: "September-October", harvestMonth: "December-January", color: "bg-orange-500", icon: <Carrot className="h-4 w-4" /> },
+    { name: "Rice", season: "Kharif", sowingMonth: "June-July", harvestMonth: "November-December", color: "bg-green-500", icon: <Sprout className="h-4 w-4" /> },
+  ]);
+  
   return (
-    <Card className={className}>
-      <CardHeader>
-        <CardTitle>Crop Calendar</CardTitle>
-      </CardHeader>
-      <CardContent className="lg:flex gap-6">
-        <div className="lg:w-1/2">
-          <Calendar
-            mode="single"
-            selected={date}
-            onSelect={handleDateChange}
-            className="border rounded-md p-3"
-            renderDay={renderDay}
-          />
-        </div>
-        <div className="mt-6 lg:mt-0 lg:w-1/2">
-          <h3 className="font-medium mb-4">
-            {date ? date.toLocaleDateString('en-IN', { 
-              weekday: 'long', 
-              year: 'numeric', 
-              month: 'long', 
-              day: 'numeric' 
-            }) : 'Select a date'}
-          </h3>
-          
-          {selectedEvents.length > 0 ? (
-            <div className="space-y-3">
-              {selectedEvents.map((event, index) => (
-                <div key={index} className="border rounded-md p-3">
-                  <div className="flex items-center justify-between mb-2">
-                    <h4 className="font-medium">{event.crop}</h4>
-                    <Badge className={getEventTypeColor(event.type)}>
-                      {event.type.charAt(0).toUpperCase() + event.type.slice(1)}
-                    </Badge>
-                  </div>
-                  <p className="text-sm text-gray-600">{event.description}</p>
-                </div>
-              ))}
+    <div className="space-y-6">
+      <div className="grid gap-4 md:grid-cols-2">
+        <Card>
+          <CardHeader>
+            <CardTitle>Crop Calendar</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-center mb-4">
+              <h3 className="text-lg font-semibold">{format(date, 'MMMM yyyy')}</h3>
+              <p className="text-sm text-muted-foreground">
+                Plan your sowing and harvesting schedule
+              </p>
             </div>
-          ) : (
-            date ? (
-              <p className="text-gray-500">No crop events for this date.</p>
-            ) : (
-              <p className="text-gray-500">Select a date to view crop events.</p>
-            )
-          )}
-        </div>
-      </CardContent>
-    </Card>
+            
+            <Calendar
+              mode="single"
+              selected={date}
+              onSelect={(date) => date && setDate(date)}
+              className="rounded-md border"
+              components={{
+                DayContent: (props) => (
+                  <>
+                    {props.day.day}
+                    <CropDayContent day={props.date} />
+                  </>
+                )
+              }}
+            />
+          </CardContent>
+        </Card>
+        
+        <Card>
+          <CardHeader>
+            <CardTitle>Crop Activities</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-8">
+              <div>
+                <h3 className="font-medium mb-2">Upcoming Activities</h3>
+                <div className="space-y-3">
+                  {[
+                    { date: "April 15, 2025", activity: "Wheat Harvesting", crop: "Wheat" },
+                    { date: "April 22, 2025", activity: "Corn Sowing Preparation", crop: "Corn" },
+                    { date: "May 5, 2025", activity: "Carrot Seed Germination Check", crop: "Carrot" },
+                    { date: "May 12, 2025", activity: "Rice Field Preparation", crop: "Rice" },
+                  ].map((activity, i) => (
+                    <div key={i} className="flex items-start p-2 border rounded-md">
+                      <div className="flex-1">
+                        <p className="font-medium">{activity.activity}</p>
+                        <p className="text-sm text-muted-foreground">{activity.date}</p>
+                      </div>
+                      <Badge variant="outline">{activity.crop}</Badge>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              
+              <div>
+                <h3 className="font-medium mb-2">Current Crops</h3>
+                <div className="grid grid-cols-2 gap-2">
+                  {selectedCrops.map((crop, i) => (
+                    <div key={i} className="border rounded-md p-3">
+                      <div className="flex items-center gap-2 mb-1">
+                        <div className={`${crop.color} p-1 rounded-full text-white`}>
+                          {crop.icon}
+                        </div>
+                        <span className="font-medium">{crop.name}</span>
+                      </div>
+                      <div className="text-xs text-muted-foreground space-y-1">
+                        <p>Season: {crop.season}</p>
+                        <p>Sowing: {crop.sowingMonth}</p>
+                        <p>Harvest: {crop.harvestMonth}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
   );
-}
+};
