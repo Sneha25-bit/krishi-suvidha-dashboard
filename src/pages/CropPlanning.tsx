@@ -1,4 +1,3 @@
-
 import { CropCalendar } from "@/components/crop-calendar/CropCalendar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -171,7 +170,7 @@ export default function CropPlanning() {
         </TabsContent>
         
         <TabsContent value="calendar" className="mt-4">
-          <CropCalendar className="col-span-2" />
+          <CropCalendar />
         </TabsContent>
         
         <TabsContent value="recommendations" className="space-y-4 mt-4">

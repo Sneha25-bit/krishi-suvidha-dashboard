@@ -1,4 +1,3 @@
-
 import { WeatherChart } from "@/components/charts/WeatherChart";
 import { MetricCard } from "@/components/ui/metric-card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -175,21 +174,25 @@ export default function Weather() {
                 
                 <h3 className="font-medium mt-6 mb-3">Recommended Actions</h3>
                 <ul className="space-y-2">
-                  <li className="flex items-start">
-                    <BadgeInfo className="h-5 w-5 text-farm-primary mr-2 flex-shrink-0 mt-0.5" />
-                    <span>Ensure proper irrigation for standing crops during the current dry spell.</span>
+                  <li>
+                    <BadgeInfo>
+                      Ensure proper irrigation for standing crops during the current dry spell.
+                    </BadgeInfo>
                   </li>
-                  <li className="flex items-start">
-                    <BadgeInfo className="h-5 w-5 text-farm-primary mr-2 flex-shrink-0 mt-0.5" />
-                    <span>Clean drainage channels before the expected rainfall next week.</span>
+                  <li>
+                    <BadgeInfo>
+                      Clean drainage channels before the expected rainfall next week.
+                    </BadgeInfo>
                   </li>
-                  <li className="flex items-start">
-                    <BadgeInfo className="h-5 w-5 text-farm-primary mr-2 flex-shrink-0 mt-0.5" />
-                    <span>Apply foliar sprays early in the morning or late evening to avoid heat stress.</span>
+                  <li>
+                    <BadgeInfo>
+                      Apply foliar sprays early in the morning or late evening to avoid heat stress.
+                    </BadgeInfo>
                   </li>
-                  <li className="flex items-start">
-                    <BadgeInfo className="h-5 w-5 text-farm-primary mr-2 flex-shrink-0 mt-0.5" />
-                    <span>Delay fertilizer application until after the rainfall period.</span>
+                  <li>
+                    <BadgeInfo>
+                      Delay fertilizer application until after the rainfall period.
+                    </BadgeInfo>
                   </li>
                 </ul>
               </div>
