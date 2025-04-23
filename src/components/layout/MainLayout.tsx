@@ -2,6 +2,7 @@
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { Outlet } from "react-router-dom";
+import ChatbotButton from "../ChatbotButton";
 
 export default function MainLayout() {
   return (
@@ -24,6 +25,7 @@ export default function MainLayout() {
           </div>
           <Outlet />
         </main>
+        <ChatbotButton />
       </div>
     </SidebarProvider>
   );
