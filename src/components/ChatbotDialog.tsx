@@ -9,6 +9,7 @@ import {
 } from "./ui/dialog";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
+import { MessageCircle } from "lucide-react";
 
 interface ChatbotDialogProps {
   open: boolean;
@@ -34,7 +35,7 @@ const ChatbotDialog: React.FC<ChatbotDialogProps> = ({
   async function sendMessage(e: React.FormEvent) {
     e.preventDefault();
     if (!input.trim()) return;
-    const userMessage = { sender: "user", text: input.trim() };
+    const userMessage: Message = { sender: "user", text: input.trim() };
     setMessages((msgs) => [...msgs, userMessage]);
     setInput("");
     setLoading(true);
