@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 // Sample equipment data
 const equipmentData: EquipmentType[] = [
@@ -80,6 +81,8 @@ const maintenanceHistory = [
 ];
 
 export default function Equipment() {
+  const navigate = useNavigate();
+
   const handleMaintenanceRequest = (id: string) => {
     const equipment = equipmentData.find(item => item.id === id);
     if (equipment) {
@@ -108,7 +111,7 @@ export default function Equipment() {
               <h2 className="text-lg font-medium">Your Equipment</h2>
               <p className="text-sm text-muted-foreground">Total: {equipmentData.length} items</p>
             </div>
-            <Button>Add New Equipment</Button>
+            <Button onClick={() => navigate("/add_equipment")}>Add New Equipment </Button> 
           </div>
           
           <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
