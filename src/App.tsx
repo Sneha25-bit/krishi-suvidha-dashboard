@@ -13,6 +13,7 @@ import CropPlanning from "./pages/CropPlanning";
 import MarketPrices from "./pages/MarketPrices";
 import Equipment from "./pages/Equipment";
 import Settings from "./pages/Settings";
+import Add_Equipment from "./pages/add_equipment";
 
 const queryClient = new QueryClient();
 
@@ -31,6 +32,7 @@ const App = () => (
             <Route path="/market" element={<MarketPrices />} />
             <Route path="/equipment" element={<Equipment />} />
             <Route path="/settings" element={<Settings />} />
+            <Route path="/add_equipment" element={<Add_Equipment />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
